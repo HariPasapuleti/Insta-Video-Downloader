@@ -1,62 +1,60 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import Header from "./components/Header";
+import URLInput from "./components/URLInput";
+import VideoOptions from "./components/VideoOptions";
 
-function App() {
-  const [url, setUrl] = useState('');
-  const [videoUrl, setVideoUrl] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
+  const [downloadUrl, setDownloadUrl] = useState("");
 
-  const handleUrlChange = (event) => {
-    setUrl(event.target.value);
-  };
-
-  const handleDownload = async (event) => {
-    event.preventDefault(); // Prevents page refresh on form submission
-    setLoading(true);
-    setError('');
-    
+  const handleSearch = async (url) => {
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/download/', 
-        { url: url }, 
-        { headers: { 'Content-Type': 'application/json' } }
-      );
-      setVideoUrl(response.data.video_url);  // Assuming backend sends video URL
+      const response = await fetch("http://127.0.0.1:8000/api/download/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log(data);
+  
+      // Check if the download was successful
+      if (data.message) {
+        setDownloadUrl(data.message); // Set the download URL
+        setVideoReady(true); // Video is ready for download
+      } else {
+        console.error("Error: No video URL received.");
+        setVideoReady(false);
+      }
     } catch (error) {
-      setError('Download failed. Please try again.');
-      console.error('Download error:', error);
-    } finally {
-      setLoading(false);
+      console.error("Error fetching video details:", error.message);
+    }
+  };
+  
+  const handleDownload = () => {
+    if (downloadUrl) {
+      window.open(downloadUrl, "_blank"); // Open video in new tab for download
+    } else {
+      alert("No video URL available for download.");
     }
   };
 
+  const handleSignOut = () => {
+    setIsLoggedIn(false);
+  };
+
   return (
-    <div>
-      <h1>Instagram Video Downloader</h1>
-      <form onSubmit={handleDownload}>
-        <input
-          type="text"
-          value={url}
-          onChange={handleUrlChange}
-          placeholder="Enter Instagram video URL"
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? 'Downloading...' : 'Download'}
-        </button>
-      </form>
-
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-
-      {videoUrl && (
-        <div>
-          <h2>Download Link</h2>
-          <a href={videoUrl} download>
-            Click here to download
-          </a>
-        </div>
-      )}
+    <div className="app">
+      <Header isLoggedIn={isLoggedIn} onSignOut={handleSignOut} />
+      <URLInput onSearch={handleSearch} />
+      {videoReady && <VideoOptions onDownload={handleDownload} />}
     </div>
   );
-}
+};
 
 export default App;

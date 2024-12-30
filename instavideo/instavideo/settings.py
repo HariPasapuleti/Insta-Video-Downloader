@@ -17,7 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-yp*58g7@po1qrvdvpz@-sa96hr^tvy)qfnfb*84ct2hh$f(r4x'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -46,7 +46,7 @@ ROOT_URLCONF = 'instavideo.urls'
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Correct React port for Vite
+    "http://localhost:5174",  # Correct React port for Vite
 ]
 
 CORS_ALLOW_METHODS = [
@@ -111,11 +111,8 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
-
-BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-
-# Add a 'downloads' folder for video storage (this should be inside your project directory)
-MEDIA_ROOT = os.path.join(BASE_DIR, 'downloads')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
