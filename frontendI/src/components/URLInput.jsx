@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import "./URLInput.css";
 
-const URLInput = ({ onSearch }) => {
+const URLInput = ({ onSearch, loading }) => {
   const [url, setUrl] = useState("");
 
   const handleChange = (event) => {
@@ -9,7 +10,10 @@ const URLInput = ({ onSearch }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSearch(url);
+    if (!url.trim()) {
+      return;
+    }
+    onSearch(url.trim());
   };
 
   return (
@@ -20,8 +24,11 @@ const URLInput = ({ onSearch }) => {
           value={url}
           onChange={handleChange}
           placeholder="Enter Instagram Video URL"
+          disabled={loading}
         />
-        <button type="submit">Search</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Searching..." : "Search"}
+        </button>
       </form>
     </div>
   );
