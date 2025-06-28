@@ -68,8 +68,9 @@ else:
     CORS_ALLOW_ALL_ORIGINS = False
     # Default CORS origins for production (will be overridden by environment variable)
     default_cors_origins = [
-        "https://insta-video-downloader-apgk.vercel.app/",
+        "https://insta-video-downloader-frontend.vercel.app",
         "https://insta-video-downloader.vercel.app",
+        "https://insta-video-downloader-apgk.vercel.app",
         "https://your-custom-domain.vercel.app"
     ]
     CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', ','.join(default_cors_origins)).split(',')
