@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-yp*58g7@po1qrvdvpz@-sa96hr^tvy)qfnfb*84ct2hh$f(r4x')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 # ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',') 
 ALLOWED_HOSTS = ["https://insta-video-downloader-backend-7ya3.onrender.com"]
@@ -74,6 +74,10 @@ else:
         "https://your-custom-domain.vercel.app"
     ]
     CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', ','.join(default_cors_origins)).split(',')
+
+# Additional CORS settings to be more permissive
+CORS_ALLOW_ALL_HEADERS = True
+CORS_EXPOSE_HEADERS = ['*']
 
 CORS_ALLOW_METHODS = [
     "GET",
