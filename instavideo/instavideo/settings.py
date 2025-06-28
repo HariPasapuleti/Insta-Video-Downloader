@@ -25,7 +25,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-yp*58g7@po1qrvdvpz@-s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
+# ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',') 
+ALLOWED_HOSTS = ["https://insta-video-downloader-backend-7ya3.onrender.com"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -67,7 +68,7 @@ else:
     CORS_ALLOW_ALL_ORIGINS = False
     # Default CORS origins for production (will be overridden by environment variable)
     default_cors_origins = [
-        "https://insta-video-downloader-frontend.vercel.app",
+        "https://insta-video-downloader-apgk.vercel.app/",
         "https://insta-video-downloader.vercel.app",
         "https://your-custom-domain.vercel.app"
     ]
