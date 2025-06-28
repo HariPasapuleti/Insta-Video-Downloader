@@ -14,7 +14,8 @@ const App = () => {
   const [caption, setCaption] = useState("");
 
   // Get API URL from environment variable or use default
-  const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+  const API_URL = import.meta.env.VITE_API_URL || "https://insta-video-downloader-backend-7ya3.onrender.com";
+  // const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
   const handleSearch = async (url) => {
     try {
