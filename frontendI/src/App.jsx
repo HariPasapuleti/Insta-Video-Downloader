@@ -13,6 +13,9 @@ const App = () => {
   const [thumbnail, setThumbnail] = useState("");
   const [caption, setCaption] = useState("");
 
+  // Get API URL from environment variable or use default
+  const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+
   const handleSearch = async (url) => {
     try {
       setLoading(true);
@@ -21,7 +24,7 @@ const App = () => {
       setThumbnail("");
       setCaption("");
       
-      const response = await fetch("http://127.0.0.1:8000/api/download/", {
+      const response = await fetch(`${API_URL}/api/download/`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
