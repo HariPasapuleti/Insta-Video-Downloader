@@ -6,22 +6,38 @@ from django.http import FileResponse, JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from instaloader import Instaloader, Post
-from instavideo import settings
 from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
 import json
-import instaloader
 import re
-import cv2
-import numpy as np
 import base64
 from io import BytesIO
-from PIL import Image
 
 # Set up logging with more detailed format
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# Simple test view
+@csrf_exempt
+def test_api(request):
+    """Simple test endpoint to verify the backend is working"""
+    return JsonResponse({
+        'status': 'success',
+        'message': 'Backend is working!',
+        'timestamp': datetime.now().isoformat()
+    })
+
+# Try to import heavy dependencies
+try:
+    from instaloader import Instaloader, Post
+    import instaloader
+    import cv2
+    import numpy as np
+    from PIL import Image
+    HEAVY_DEPS_AVAILABLE = True
+except ImportError as e:
+    logger.warning(f"Heavy dependencies not available: {e}")
+    HEAVY_DEPS_AVAILABLE = False
 
 class VideoDetails(APIView):
     def get(self, request, format=None):
